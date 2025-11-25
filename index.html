@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        /* --- BLACK & PURPLE GRADIENT THEME --- */
+        :root {
+            /* Background: Deep Black to Purple Gradient */
+            --bg-gradient: linear-gradient(135deg, #050505 0%, #1a0b2e 100%);
+            
+            /* Glassmorphism Card Background */
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(139, 92, 246, 0.3);
+            
+            /* Text Colors */
+            --text-primary: #ffffff;
+            --text-secondary: #d8b4fe; /* Light Lavender */
+            
+            /* Accents */
+            --accent-color: #a855f7; /* Bright Purple */
+            --accent-gradient: linear-gradient(90deg, #a855f7, #ec4899); /* Purple to Pink */
+            --nav-bg: rgba(5, 5, 5, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed; /* Keeps gradient fixed while scrolling */
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            position: fixed;
+            width: 100%;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px); /* Blurs the background behind nav */
+            z-index: 1000;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; /* Gradient Text */
+        }
+
+        .nav-links { display: flex; gap: 30px; font-weight: 500; }
+        
+        .nav-links a { color: var(--text-secondary); position: relative; }
+        
+        .nav-links a::after {
+            content: '';
+            width: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            transition: 0.3s;
+        }
+        
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: #fff; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; font-weight: 800; }
+        
+        .hero h1 span {
+            color: var(--accent-color);
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.5); /* Glowing Text */
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons { display: flex; gap: 20px; }
+
+        /* Gradient Button */
+        .btn {
+            padding: 12px 35px;
+            background: var(--accent-gradient);
+            color: white;
+            border-radius: 50px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.7);
+        }
+
+        /* Outline/GitHub Button */
+        .btn-github {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            box-shadow: none;
+        }
+        
+        .btn-github:hover {
+            background: var(--accent-color);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+        }
+
+        /* --- SECTIONS --- */
+        section { padding: 100px 10%; }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+        }
+
+        .section-title span {
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        /* --- SKILLS (Glassmorphism) --- */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .skill-tag {
+            background: var(--card-bg);
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            font-weight: 600;
+            transition: 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+
+        /* --- PROJECTS (Cards) --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            transition: 0.3s;
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(5px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-card h3 { margin-bottom: 15px; font-size: 1.5rem; color: #fff; }
+        .project-card p { color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem; }
+        
+        .project-link {
+            color: var(--accent-color);
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 40px;
+            background: rgba(0,0,0,0.5);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-border);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } 
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Portfolio.</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <h1>Hi, I'm <span id="name-placeholder">Your Name</span></h1>
+        <p>Engineering Student | AI & DS Enthusiast</p>
+        
+        <div class="hero-buttons">
+            <a href="#projects" class="btn">View Work</a>
+            
+            <a href="https://github.com/aryanpillay2007/Portfolio" target="_blank" class="btn btn-github">My GitHub</a>
+
+             <a href="https://www.linkedin.com/in/aryan-pillay-vai2001" target="_blank" class="btn btn-github">My Linkedin</a>
+
+        </div>
+    </section>
+
+     <section id="photo" class="hero">
+<div>
+       <img src="C:\Users\ALSP\Pictures\Screenshots\Screenshot 2025-11-18 220403.png" height=400 alt="photo">
+        
+        </div>
+    </section>
+
+
+    <section id="about">
+        <h2 class="section-title"><span>About Me</span></h2>
+        <div style="display:flex; justify-content:center;">
+            <p style="max-width:700px; text-align:center; color:var(--text-secondary); font-size:1.1rem;">
+                I am a B.Tech Engineering student specializing in AI and Digital Systems. 
+                I have a strong passion for solving mathematical problems 
+                and creating modern web applications. I am always eager to learn new technologies 
+                and tackle challenging projects.
+            </p>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title"><span>Tech Skills</span></h2>
+        <div class="skills-container">
+            <div class="skill-tag">C++</div>
+            <div class="skill-tag">Data Structures</div>
+            <div class="skill-tag">Python</div>
+            <div class="skill-tag">AI & ML Concepts</div>
+            <div class="skill-tag">HTML/CSS</div>
+            <div class="skill-tag">SQL</div>
+            <div class="skill-tag">Mathematics</div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title"><span>Projects</span></h2>
+        <div class="projects-grid">
+            
+
+            <div class="project-card">
+                <h3>Web Portfolio</h3>
+                <p>A responsive personal portfolio website created with HTML, CSS, and JavaScript.</p>
+                <a href="https://github.com/aryanpillay2007/Portfolio/blob/main/portfolio.html" class="project-link">View Code &rarr;</a><br>
+<a href="file:///C:/Users/ALSP/Desktop/HTML/portfolio.html" class="project-link">View Webpage &rarr;</a>
+            </div>
+
+            <div class="project-card">
+                <h3>Calculator</h3>
+                <p>A Javascript based functioning Arithmetic Calculator.</p>
+                <a href="https://github.com/aryanpillay2007/Portfolio/blob/main/Calculator%20op.html" class="project-link">View Code &rarr;</a><br>
+
+<a href="file:///C:/Users/ALSP/Desktop/HTML/Calculator%20op.html" class="project-link">View Webpage &rarr;</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" style="text-align: center;">
+        <h2 class="section-title"><span>Contact Me</span></h2>
+        <p style="color:var(--text-secondary); margin-bottom:30px;">Ready to collaborate on the next big thing?</p>
+        <a href="tel:+919423263161" class="btn btn-github">Call Me</a>
+        <a href="mailto:aryanpillay2007@gmail.com" class="btn">Send Email</a>
+    </section>
+
+    <footer>
+        <p>Designed for College Workshop &copy; 2025</p>
+    </footer>
+
+    <script>
+        // Typing Effect
+        const nameElement = document.getElementById('name-placeholder');
+        const myName = "Aryan Jeeva Pillay"; // CHANGE THIS
+        let i = 0;
+
+        nameElement.textContent = ""; 
+        
+        function typeWriter() {
+            if (i < myName.length) {
+                nameElement.textContent += myName.charAt(i);
+                i++;
+                setTimeout(typeWriter, 150);
+            }
+        }
+        
+        window.onload = typeWriter;
+    </script>
+</body>
+</html>
